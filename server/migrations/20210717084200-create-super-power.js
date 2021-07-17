@@ -10,17 +10,29 @@ module.exports = {
       },
       name: {
         type: Sequelize.STRING,
-        allowNull:false
+        allowNull: false
+      },
+      discription: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        field:"created_at"
+        
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        field: "updated_at"
+        
+      },
+      superHeroId: {
+        field: 'super_hero_id',
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references:{
+          model:'SuperHeros',
+          key:'id'
+        }
       }
     });
   },
