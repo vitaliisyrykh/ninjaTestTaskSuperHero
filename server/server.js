@@ -1,7 +1,11 @@
 const http = require('http');
-const app = require('./app');
-const { PORT } = require('./config/configServer/index');
+/* require('dotenv').config();
+ */ const app = require('./app.js');
 
 const server = http.createServer(app);
 
-server.listen(PORT);
+const port = process.env.PORT || 3010;
+
+server.listen(port, () => {
+  console.log(`APP started on port ${port}`);
+});
