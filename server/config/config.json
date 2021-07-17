@@ -1,6 +1,6 @@
 {
   "development": {
-    "username": "postger",
+    "username": "postgres",
     "password": "1111",
     "database": "ninjas_super_hero_db",
     "host": "127.0.0.1",
