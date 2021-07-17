@@ -22,9 +22,30 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: true,
         }
       },
-      realName: {typeDataTypes.STRING},
-      originDescription: DataTypes.STRING,
-      catchPhrase: DataTypes.STRING
+      realName: {
+        type:DataTypes.STRING,
+        allowNull: false,
+        validate:{
+          notNull: true,
+          notEmpty: true
+        }
+      },
+      originDescription: {
+        type:DataTypes.TEXT,
+        allowNull: false,
+        validate:{
+          notNull: true,
+          notEmpty: true
+        }
+      },
+      catchPhrase: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        validate: {
+          notNull: true,
+          notEmpty: true,
+        }
+      }
     },
     {
       sequelize,
