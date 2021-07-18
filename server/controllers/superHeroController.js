@@ -29,9 +29,8 @@ module.exports.getAllHeroes = async (req, res, next) => {
 
 module.exports.getHero = async (req, res, next) => {
   try {
-    const { params:{idHero} } = req;
-    const hero = await SuperHero.findOne({where:{id : idHero}});
-    res.status(200).send(hero);
+    const { heroInstance } = req;
+    res.status(200).send(heroInstance);
   } catch (err) {
     next(err);
   }
