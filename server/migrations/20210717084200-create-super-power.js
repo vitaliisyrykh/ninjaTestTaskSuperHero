@@ -26,7 +26,6 @@ module.exports = {
         
       },
       superHeroId: {
-        field: 'super_hero_id',
         type: Sequelize.INTEGER,
         allowNull: false,
         references:{
