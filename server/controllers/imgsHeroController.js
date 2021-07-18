@@ -37,3 +37,23 @@ module.exports.getHeroImages = async (req, res, next) => {
     next(err);
   }
 };
+
+module.exports.getImage = async (req, res, next) => {
+  try {
+    const {
+      params: { idHero, imgId },
+    } = req;
+
+    const image = await Image.findOne({
+      where: { hero_id: idHero, id: imgId },
+    });
+
+    if (!image) {
+      return next(createError(404));
+    }
+
+    res.status(200).send(image);
+  } catch (err) {
+    next(err);
+  }
+};
