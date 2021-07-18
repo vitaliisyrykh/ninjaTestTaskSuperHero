@@ -25,8 +25,9 @@ module.exports = {
         type: Sequelize.DATE,
         
       },
-      superHeroId: {
+      heroId: {
         type: Sequelize.INTEGER,
+        field: 'hero_id',
         allowNull: false,
         references:{
           model:'SuperHeros',
