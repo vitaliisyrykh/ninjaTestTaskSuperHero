@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const superHeroRouter = require('./routerHero/superHeroRouter');
+const superHeroRouter = require('./routersHero/superHeroRouter');
 
 router.use('/superhero', superHeroRouter)
 
