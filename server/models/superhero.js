@@ -5,6 +5,9 @@ module.exports = (sequelize, DataTypes) => {
     static associate (models) {
      SuperHero.hasMany(models.SuperPower, {
        foreignKey: 'superHeroId'
+     });
+     SuperHero.hasMany(models.Image,{
+      foreignKey: 'superHeroId'
      })
     }
   }
