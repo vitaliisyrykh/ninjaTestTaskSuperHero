@@ -1,14 +1,14 @@
 'use strict';
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Images extends Model {
+  class Image extends Model {
     static associate (models) {
-      Images.belongsTo(models.SuperHero,{
+      Image.belongsTo(models.SuperHero,{
         foreignKey: 'superHeroId'
       })
     }
   }
-  Images.init(
+  Image.init(
     {
       path: {
         type: DataTypes.STRING,
@@ -21,8 +21,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'Images'
+      modelName: 'Image'
     }
   );
-  return Images;
+  return Image;
 };
