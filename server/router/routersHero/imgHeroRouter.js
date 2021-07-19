@@ -10,6 +10,7 @@ const imgsRouter = Router({
 
 imgsRouter.post('/', uploadImgsMW, checkHero, imgsController.addImgs);
 imgsRouter.get('/', checkHero, imgsController.getHeroImages);
-imgsRouter.get('/:imgId', imgsController.getImage);
+imgsRouter.get('/:imgId', checkHero, imgsController.getImage);
+imgsRouter.delete('/:imgId',checkHero, imgsController.deleteImage)
 
 module.exports = imgsRouter;
