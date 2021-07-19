@@ -41,11 +41,11 @@ module.exports.getHeroImages = async (req, res, next) => {
 module.exports.getImage = async (req, res, next) => {
   try {
     const {
-      params: { idHero, imgId },
+      params: { idHero, imgId }
     } = req;
 
     const image = await Image.findOne({
-      where: { hero_id: idHero, id: imgId },
+      where: { hero_id: idHero, id: imgId }
     });
 
     if (!image) {
@@ -53,6 +53,25 @@ module.exports.getImage = async (req, res, next) => {
     }
 
     res.status(200).send(image);
+  } catch (err) {
+    next(err);
+  }
+};
+module.exports.deleteImage = async (req, res, next) => {
+  try {
+    const {
+      params: { idHero, imgId }
+    } = req;
+
+    const count = await Image.destroy({
+      where: { hero_id: idHero, id: imgId }
+    });
+
+    if (count === 0) {
+      return next(createError(404));
+    }
+
+    res.status(200).end();
   } catch (err) {
     next(err);
   }
