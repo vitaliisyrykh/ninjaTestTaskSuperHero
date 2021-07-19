@@ -17,7 +17,7 @@ module.exports.createPower = async (req, res, next) => {
 module.exports.getSuperPower = async (req, res, next) => {
   try {
     const { heroInstance } = req;
-    const superPowers = await heroInstance.getSuperPowers({ returning: true });
+    const superPowers = await heroInstance.getSuperPowers();
     if (!superPowers) {
       return next(createError(404, 'Super powers not found'));
     }
@@ -34,8 +34,7 @@ module.exports.getPower = async (req, res, next) => {
       params: { idPower }
     } = req;
     const superPower = await heroInstance.getSuperPowers({
-      where: { id: idPower },
-      returning: true
+      where: { id: idPower }
     });
     if (!superPower) {
       return next(404, 'Super power not found');
@@ -77,7 +76,7 @@ module.exports.deleteSuperPower = async (req, res, next) => {
     if (!deletedPower) {
       return next(createError(400, 'Super power can`t be delete'));
     }
-    res.send(supPower);
+    res.status(200).send(supPower);
   } catch (err) {
     next(err);
   }
