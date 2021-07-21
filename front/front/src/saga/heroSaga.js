@@ -11,4 +11,16 @@ export function * createHero (action) {
   } catch (error) {
     yield put(heroActionCreator.createHeroError(error));
   }
+};
+
+export function * getHeroes (action){
+  try {
+    
+    const {data:heroes}=yield API.getAllHeroes(action.payload);
+    console.log(heroes);
+    
+    yield put(heroActionCreator.getHeroesSuccess(heroes));
+  } catch (error) {
+    yield put(heroActionCreator.getHeroesError(error))
+  }
 }
