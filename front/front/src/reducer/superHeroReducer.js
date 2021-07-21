@@ -40,7 +40,7 @@ function heroReducer (state = initialState, action) {
     case ACTION_TYPES.GET_HEROES_SUCCESS: {
       const { heroes } = state;
       const {
-        payload: { heroes: newHeroes } 
+        payload: { heroes: newHeroes }
       } = action;
       console.log(action);
       return {
@@ -58,6 +58,38 @@ function heroReducer (state = initialState, action) {
         isFetching: false,
         error: error
       };
+    }
+
+    case ACTION_TYPES.DELETE_HERO_REQUEST: {
+      return {
+        ...state,
+        isFetching: true
+      };
+    }
+
+    case ACTION_TYPES.DELETE_HERO_SUCCESS: {
+      const { heroes } = state;
+      const {
+        payload:{id}
+      } = action;
+      const newHeroesArr = heroes.filter(hero => hero.id !== id);
+      console.log(heroes);
+      console.log(newHeroesArr);
+      return {
+        ...state,
+        isFetching: false,
+        heroes: [...newHeroesArr]
+      };
+    }
+
+    case ACTION_TYPES.DELETE_HERO_ERROR:{
+      const {payload:{error}}=action;
+      console.log(error);
+      return{
+        ...state,
+        isFetching: false,
+        error:error
+      }
     }
 
     default:
