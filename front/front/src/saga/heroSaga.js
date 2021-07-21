@@ -23,4 +23,15 @@ export function * getHeroes (action){
   } catch (error) {
     yield put(heroActionCreator.getHeroesError(error))
   }
+};
+
+export function * deleteHero(action){
+  try {
+    const {payload:{id}}=action;
+    console.log(id);
+    const {data}= yield API.deleteHero({id});
+    yield put(heroActionCreator.deleteHeroSuccess({id}))
+  } catch (error) {
+    yield put(heroActionCreator.deleteHeroError(error))
+  }
 }
