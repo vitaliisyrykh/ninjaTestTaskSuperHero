@@ -14,3 +14,8 @@ export const getAllHeroes = async ({limit=5, offset=0})=>{
   const promise = httpClient.get(`/superhero/?${queryString.stringify({limit, offset})}`);
   return promise;
 };
+
+export const deleteHero = async ({id})=>{
+  const promise = httpClient.delete(`/superhero/${id}`)
+  return promise
+};
