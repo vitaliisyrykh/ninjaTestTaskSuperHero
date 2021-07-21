@@ -1,13 +1,13 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
 import { createHeroRequest } from '../action/creatorHeroAction';
 
 const HeroForm = props => {
-  const {createHeroRequest} = props;
-
+  const dispatch =useDispatch();
+  
   const onSubmit = (values, formikBag) => {
-    createHeroRequest(values);
+    dispatch(createHeroRequest(values));
     formikBag.resetForm();
   };
 
@@ -34,8 +34,6 @@ const HeroForm = props => {
   );
 };
 
-const mapDispaychToProps = dispatch => ({
-  createHeroRequest: values => dispatch(createHeroRequest(values))
-});
 
-export default connect(null, mapDispaychToProps)(HeroForm);
+
+export default HeroForm;
