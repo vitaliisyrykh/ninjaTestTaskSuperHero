@@ -1,23 +1,27 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import {getHeroesRequest} from '../action/creatorHeroAction';
+import Hero from './Hero';
 
 const HeroList = props => {
-  const { heroes } = props;
+  const { heroes, isFetching, error } = useSelector(state => state.superHero);
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    dispatch(getHeroesRequest({ offset: heroes.length }));
+  },[dispatch]);
+
   return (
     <div>
+      {isFetching && 'LOADING....'}
+      {error && JSON.stringify(error, null, 4)}
       <ul>
-        {heroes.map(hero=>(
-          <li key={hero.id}>
-            {JSON.stringify(hero, null, 4)}
-          </li>
+        {heroes.map(hero => (
+          <Hero key={hero.id} hero={hero} />
         ))}
       </ul>
     </div>
-    );
+  );
 };
 
-const mapStateToProps = state => ({
-  heroes:state.superHero.heroes
-});
-
-export default connect(mapStateToProps, null)(HeroList);
+export default HeroList;
