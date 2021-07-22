@@ -11,27 +11,54 @@ export function * createHero (action) {
   } catch (error) {
     yield put(heroActionCreator.createHeroError(error));
   }
-};
+}
 
-export function * getHeroes (action){
+export function * getHeroes (action) {
   try {
-    
-    const {data:heroes}=yield API.getAllHeroes(action.payload);
+    const { data: heroes } = yield API.getAllHeroes(action.payload);
     console.log(heroes);
-    
+
     yield put(heroActionCreator.getHeroesSuccess(heroes));
   } catch (error) {
-    yield put(heroActionCreator.getHeroesError(error))
+    yield put(heroActionCreator.getHeroesError(error));
   }
-};
+}
 
-export function * deleteHero(action){
+export function * deleteHero (action) {
   try {
-    const {payload:{id}}=action;
-    console.log(id);
-    const {data}= yield API.deleteHero({id});
-    yield put(heroActionCreator.deleteHeroSuccess({id}))
+    const {
+      payload: { id }
+    } = action;
+    yield API.deleteHero({ id });
+    const { data } = yield put(heroActionCreator.deleteHeroSuccess({ id }));
   } catch (error) {
-    yield put(heroActionCreator.deleteHeroError(error))
+    yield put(heroActionCreator.deleteHeroError(error));
+  }
+}
+
+export function * deleteSuperPower (action) {
+  try {
+    const {
+      payload: { id, idHero }
+    } = action;
+
+    const { data } = yield API.deleteSuperPower({ id, idHero });
+    yield put(heroActionCreator.deleteSuperPowerSuccess({ id, idHero }));
+  } catch (error) {
+    yield put(heroActionCreator.deleteSuperPowerError({ error }));
+  }
+}
+
+export function * updateHero (action) {
+  try {
+    const {
+      payload: { values: updateBody, id }
+    } = action;
+    
+    const { data } = yield API.updateHero({ updateBody, id });
+    console.log(data);
+    yield put(heroActionCreator.updateHeroSuccess({data}));
+  } catch (error) {
+    yield put(heroActionCreator.updateHeroError({error}))
   }
 }
