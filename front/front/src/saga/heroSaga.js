@@ -54,11 +54,24 @@ export function * updateHero (action) {
     const {
       payload: { values: updateBody, id }
     } = action;
-    
+
     const { data } = yield API.updateHero({ updateBody, id });
     console.log(data);
-    yield put(heroActionCreator.updateHeroSuccess({data}));
+    yield put(heroActionCreator.updateHeroSuccess({ data }));
   } catch (error) {
-    yield put(heroActionCreator.updateHeroError({error}))
+    yield put(heroActionCreator.updateHeroError({ error }));
+  }
+}
+
+export function * createSuperPower (action) {
+  try {
+    const {
+      payload: { values: createSuperPower, id }
+    } = action;
+    console.log(id);
+    const { data } = yield API.createSuperPower({ createSuperPower, id });
+    yield put(heroActionCreator.createSuperPowerSuccess({ data, id }));
+  } catch (error) {
+    yield put(heroActionCreator.createSuperPowerError({ error }));
   }
 }
