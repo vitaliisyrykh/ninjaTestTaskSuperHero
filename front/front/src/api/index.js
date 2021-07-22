@@ -42,7 +42,6 @@ export const createSuperPower = async ({ id, createSuperPower }) => {
 };
 
 export const uploadHeroImg = async ({ heroImg, id }) => {
-  console.log(heroImg);
   const responsePromise = httpClient.post(`/superhero/${id}/imgs/`, heroImg);
   return responsePromise;
 };
