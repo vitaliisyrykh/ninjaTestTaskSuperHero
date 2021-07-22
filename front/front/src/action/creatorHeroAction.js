@@ -89,3 +89,18 @@ export const deleteSuperPowerError = ({ error }) => ({
   type: ACTION_TYPES.DELETE_SUPER_POWER_ERROR,
   payload: { error }
 });
+
+export const createHeroImgRequest = ({heroImg, id})=>({
+  type: ACTION_TYPES.CREATE_SUPER_HERO_IMG_REQUEST,
+  payload:{heroImg, id}
+});
+
+export const createHeroImgSuccess = ({data})=>({
+  type: ACTION_TYPES.CREATE_SUPER_HERO_IMG_SUCCESS,
+  payload:{data}
+})
+
+export const createHeroImgError = ({error})=>({
+  type: ACTION_TYPES.CREATE_SUPER_HERO_IMG_ERROR,
+  payload:{error}
+})
