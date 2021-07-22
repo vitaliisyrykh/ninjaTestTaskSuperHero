@@ -10,12 +10,24 @@ export const createHero = async data => {
   return responsePromise;
 };
 
-export const getAllHeroes = async ({limit=5, offset=0})=>{
-  const promise = httpClient.get(`/superhero/?${queryString.stringify({limit, offset})}`);
-  return promise;
+export const getAllHeroes = async ({ limit = 5, offset = 0 }) => {
+  const responsePromise = httpClient.get(
+    `/superhero/?${queryString.stringify({ limit, offset })}`
+  );
+  return responsePromise;
+};
+export const updateHero = async ({updateBody,id})=>{
+  const responsePromise = httpClient.patch(`/superhero/${id}`,updateBody)
+  return responsePromise;
+}; 
+
+export const deleteHero = async ({ id }) => {
+  const responsePromise = httpClient.delete(`/superhero/${id}`);
+  return responsePromise;
 };
 
-export const deleteHero = async ({id})=>{
-  const promise = httpClient.delete(`/superhero/${id}`)
-  return promise
+
+export const deleteSuperPower = async ({ id, idHero }) => {
+  const responsePromise = httpClient.delete(`/superhero/${idHero}/superpower/${id}`);
+  return responsePromise;
 };
