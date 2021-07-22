@@ -30,6 +30,23 @@ export const getHeroesError = ({ error }) => ({
   payload: error
 });
 
+export const updateHeroRequest =({values,id})=>({
+  type: ACTION_TYPES.UPDATE_HERO_REQUEST,
+  payload:{values,id}
+})
+
+export const updateHeroSuccess = ({data})=>({
+  type: ACTION_TYPES.UPDATE_HERO_SUCCESS,
+  payload:{data}
+});
+
+export const updateHeroError = ({error})=>({
+  type: ACTION_TYPES.UPDATE_HERO_ERROR,
+  payload:{error}
+})
+
+
+
 export const deleteHeroRequest = ({ id } = {}) => ({
   type: ACTION_TYPES.DELETE_HERO_REQUEST,
   payload: { id }
@@ -44,3 +61,19 @@ export const deleteHeroError = ({error})=>({
   type:ACTION_TYPES.DELETE_HERO_ERROR,
   payload: error
 });
+
+export const deleteSuperPowerRequest = ({id,idHero}={})=>({
+  type:ACTION_TYPES.DELETE_SUPER_POWER_REQUEST,
+  payload:{id,idHero}
+})
+
+export const deleteSuperPowerSuccess = ({id,idHero}={})=>({
+  type: ACTION_TYPES.DELETE_SUPER_POWER_SUCCESS,
+  payload:{id, idHero}
+})
+
+export const deleteSuperPowerError = ({error})=>({
+  type:ACTION_TYPES.DELETE_SUPER_POWER_ERROR,
+  payload:{error}
+
+})
