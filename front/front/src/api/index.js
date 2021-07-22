@@ -31,3 +31,9 @@ export const deleteSuperPower = async ({ id, idHero }) => {
   const responsePromise = httpClient.delete(`/superhero/${idHero}/superpower/${id}`);
   return responsePromise;
 };
+
+export const createSuperPower = async ({id, createSuperPower})=>{
+  console.log(id);
+  const responsePromise = httpClient.post(`/superhero/${id}/superpower/`, createSuperPower);
+  return responsePromise;
+}
