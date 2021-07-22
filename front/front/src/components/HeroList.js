@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {getHeroesRequest} from '../action/creatorHeroAction';
+import { getHeroesRequest } from '../action/creatorHeroAction';
 import Hero from './Hero';
 
 const HeroList = props => {
   const { heroes, isFetching, error } = useSelector(state => state.superHero);
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     dispatch(getHeroesRequest({ offset: heroes.length }));
-  },[dispatch]);
+  }, [dispatch]);
 
   return (
     <div>
