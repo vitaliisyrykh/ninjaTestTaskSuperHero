@@ -122,22 +122,24 @@ function heroReducer (state = initialState, action) {
 
     case ACTION_TYPES.CREATE_SUPER_POWER_SUCCESS: {
       const { heroes } = state;
-      const {payload:{data:createdPower,id}} = action;
+      const {
+        payload: { data: createdPower, id }
+      } = action;
       const hero = heroes.find(hero => hero.id === id);
       hero.SuperPowers.push(createdPower);
       return {
         ...state,
-        isFetching:false,
+        isFetching: false,
         heroes: heroes.map(h => (h.id === id ? hero : h))
       };
     }
-    case ACTION_TYPES.CREATE_SUPER_POWER_ERROR:{
-      const {error}=action;
-      return{
+    case ACTION_TYPES.CREATE_SUPER_POWER_ERROR: {
+      const { error } = action;
+      return {
         ...state,
-        isFetching:false,
-        error:error
-      }
+        isFetching: false,
+        error: error
+      };
     }
 
     case ACTION_TYPES.DELETE_SUPER_POWER_REQUEST: {
@@ -175,6 +177,34 @@ function heroReducer (state = initialState, action) {
         isFetching: true,
         error: error
       };
+    }
+
+    case ACTION_TYPES.CREATE_SUPER_HERO_IMG_REQUEST: {
+      return {
+        ...state,
+        isFetching: true
+      };
+    }
+
+    case ACTION_TYPES.CREATE_SUPER_HERO_IMG_SUCCESS: {
+      const { heroes } = state;
+      const { payload } = action;
+      const hero = heroes.find(h => h.id === payload.id);
+      hero.Images.push(payload.img);
+      return {
+        ...state,
+        isFetching: false,
+        heroes: heroes.map(h => (h.id === payload.id ? hero : h))
+      };
+    }
+
+    case ACTION_TYPES.CREATE_SUPER_HERO_IMG_ERROR:{
+      const{payload:{error}}=action;
+      return{
+        ...state,
+        isFetching:false,
+        error:error
+      }
     }
 
     default:
