@@ -10,25 +10,18 @@ module.exports.createSuperHero = async (req, res, next) => {
     } = req;
     console.log(body);
     const createdHero = await SuperHero.create(body);
-    /*   if (files.length) {
-      const imgs = files.map(file => ({ path: file.path, hero_id: createdHero.id }));
-      await Image.bulkCreate(imgs, { returning: true });
-    }else{return} */
-    /* if (superPowers.length) {
-      const power = superPowers.map(powerObj => ({
-        name: powerObj.name,
-        discription: powerObj.discription,
-        hero_id: createdHero.id
-      }));
-      await SuperPower.bulkCreate(power, { returning: true });
-    } */
     const heroWithData = await SuperHero.findAll({
       where: { id: createdHero.id },
       include:[{
         model: SuperPower,
         attributes:["id", "name"],
         as:"SuperPowers"
-      }]
+      },
+    {
+      model: Image,
+      attributes:["path"],
+      as: "Images"
+    }]
     });
     if (!createdHero) {
       next(createError(400, ' Hero can`t created'));
@@ -49,6 +42,11 @@ module.exports.getAllHeroes = async (req, res, next) => {
         model: SuperPower,
         attributes:["id", "name", "discription"],
         as:"SuperPowers"
+      },
+      {
+        model: Image,
+        attributes:["path","id"],
+        as: "Images"
       }]
     });
     if (!heroes) {
@@ -88,6 +86,11 @@ module.exports.updateHero = async (req, res, next) => {
         model: SuperPower,
         attributes:["id", "name"],
         as:"SuperPowers"
+      },
+      {
+        model: Image,
+        attributes:["path"],
+        as: "Images"
       }]
     });
     if (rowsCount === 0) {
