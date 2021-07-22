@@ -75,3 +75,13 @@ export function * createSuperPower (action) {
     yield put(heroActionCreator.createSuperPowerError({ error }));
   }
 }
+
+export function * uploadHeroImg (action){
+  try {
+    const {payload:{heroImg, id}}=action;
+    const {data}= yield API.uploadHeroImg({heroImg,id})
+    yield put(heroActionCreator.createHeroImgSuccess({data}))
+  } catch (error) {
+    yield put(heroActionCreator.createHeroImgError({error}))
+  }
+}
