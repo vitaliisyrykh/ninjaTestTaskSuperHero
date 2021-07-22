@@ -6,7 +6,8 @@ import {
   updateHero,
   deleteHero,
   deleteSuperPower, 
-  createSuperPower
+  createSuperPower,
+  uploadHeroImg
 } from './heroSaga';
 
 function * rootSaga () {
@@ -16,6 +17,7 @@ function * rootSaga () {
   yield takeLatest(ACTION_TYPES.DELETE_HERO_REQUEST, deleteHero);
   yield takeLatest(ACTION_TYPES.CREATE_SUPER_POWER_REQUEST, createSuperPower)
   yield takeLatest(ACTION_TYPES.DELETE_SUPER_POWER_REQUEST, deleteSuperPower);
+  yield takeLatest(ACTION_TYPES.CREATE_SUPER_HERO_IMG_REQUEST, uploadHeroImg)
 }
 
 export default rootSaga;
