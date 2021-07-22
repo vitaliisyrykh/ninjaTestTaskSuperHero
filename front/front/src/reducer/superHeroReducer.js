@@ -1,10 +1,8 @@
 import ACTION_TYPES from '../action/actionTypes';
-import { updateHero } from '../saga/heroSaga';
-
 const initialState = {
   heroes: [],
   isFetching: false,
-  error: null,
+  error: null
 };
 
 function heroReducer (state = initialState, action) {
@@ -72,7 +70,6 @@ function heroReducer (state = initialState, action) {
       const {
         payload: { data: updatedHero }
       } = action;
-      console.log(updatedHero);
       return {
         ...state,
         isFetching: false,
@@ -114,6 +111,33 @@ function heroReducer (state = initialState, action) {
         isFetching: false,
         error: error
       };
+    }
+
+    case ACTION_TYPES.CREATE_SUPER_POWER_REQUEST: {
+      return {
+        ...state,
+        isFetching: true
+      };
+    }
+
+    case ACTION_TYPES.CREATE_SUPER_POWER_SUCCESS: {
+      const { heroes } = state;
+      const {payload:{data:createdPower,id}} = action;
+      const hero = heroes.find(hero => hero.id === id);
+      hero.SuperPowers.push(createdPower);
+      return {
+        ...state,
+        isFetching:false,
+        heroes: heroes.map(h => (h.id === id ? hero : h))
+      };
+    }
+    case ACTION_TYPES.CREATE_SUPER_POWER_ERROR:{
+      const {error}=action;
+      return{
+        ...state,
+        isFetching:false,
+        error:error
+      }
     }
 
     case ACTION_TYPES.DELETE_SUPER_POWER_REQUEST: {
