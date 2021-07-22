@@ -4,10 +4,11 @@ import { deleteHeroRequest, isUpdateAction } from '../action/creatorHeroAction';
 import SuperPower from './SuperPower';
 import HeroUpdateFrom from './HeroUpdateFrom';
 import SuperPowerForm from './SuperPowerForm';
+import ImgForm from './ImgForm';
 
 const Hero = props => {
   const {
-    hero: { nickName, realName, originDescription, chartPhrase, id, SuperPowers },
+    hero: { nickName, realName, originDescription, chartPhrase, id, SuperPowers,Images },
     hero
   } = props;
   const [isUpdate, setIsUpdate]= useState(false)
@@ -35,9 +36,17 @@ const Hero = props => {
           <p>{originDescription}</p>
           <span>{chartPhrase}</span>
           {isCreatePower&& <SuperPowerForm id={id} isCreatehandler={isCreatehandler}/>}
+          <ImgForm id={id}/>
           <ul>
             {SuperPowers.map(power => (
               <SuperPower key={power.id} power={power} idHero={id} />
+            ))}
+          </ul>
+          <ul>
+            {Images.map(img=>(
+             <li key={img.id}>
+                <img src={img.path}/>
+             </li> 
             ))}
           </ul>
         </div>
