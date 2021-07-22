@@ -10,10 +10,10 @@ module.exports.createSuperHero = async (req, res, next) => {
     } = req;
     console.log(body);
     const createdHero = await SuperHero.create(body);
-    if (files.length) {
+    /*   if (files.length) {
       const imgs = files.map(file => ({ path: file.path, hero_id: createdHero.id }));
       await Image.bulkCreate(imgs, { returning: true });
-    }else{return}
+    }else{return} */
     /* if (superPowers.length) {
       const power = superPowers.map(powerObj => ({
         name: powerObj.name,
@@ -22,11 +22,18 @@ module.exports.createSuperHero = async (req, res, next) => {
       }));
       await SuperPower.bulkCreate(power, { returning: true });
     } */
-
+    const heroWithData = await SuperHero.findAll({
+      where: { id: createdHero.id },
+      include:[{
+        model: SuperPower,
+        attributes:["id", "name"],
+        as:"SuperPowers"
+      }]
+    });
     if (!createdHero) {
       next(createError(400, ' Hero can`t created'));
     }
-    res.status(200).send(createdHero);
+    res.status(200).send({ data: heroWithData });
   } catch (error) {
     next(error);
   }
@@ -35,13 +42,19 @@ module.exports.createSuperHero = async (req, res, next) => {
 module.exports.getAllHeroes = async (req, res, next) => {
   try {
     const { pagination } = req;
-    const allSuperHero = await SuperHero.findAll({
-      ...pagination
+    const heroes = await SuperHero.findAll({
+      ...pagination,
+      attributes: { exclude: ['updatedAt', 'createdAt'] },
+      include:[{
+        model: SuperPower,
+        attributes:["id", "name", "discription"],
+        as:"SuperPowers"
+      }]
     });
-    if (!allSuperHero) {
+    if (!heroes) {
       return next(createError(404, 'Heroes not found'));
     }
-    res.status(200).send(allSuperHero);
+    res.status(200).send(heroes);
   } catch (err) {
     next(err);
   }
@@ -62,14 +75,26 @@ module.exports.updateHero = async (req, res, next) => {
       body,
       params: { idHero }
     } = req;
+    console.log(body);
     const [rowsCount, [updatedHero]] = await SuperHero.update(body, {
       where: { id: idHero },
-      returning: true
+      returning: true,
+      
+    });
+
+    const [updatedHeroWithData] = await SuperHero.findAll({
+      where: { id: updatedHero.id },
+      include:[{
+        model: SuperPower,
+        attributes:["id", "name"],
+        as:"SuperPowers"
+      }]
     });
     if (rowsCount === 0) {
       return next(createError(404, 'Not found'));
     }
-    res.status(200).send(updatedHero);
+    console.log(updatedHeroWithData);
+    res.status(200).send(updatedHeroWithData);
   } catch (err) {
     next(err);
   }
