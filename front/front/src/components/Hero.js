@@ -1,6 +1,6 @@
 import React, { useEffect,useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { deleteHeroRequest, isUpdateAction } from '../action/creatorHeroAction';
+import { deleteHeroRequest } from '../action/creatorHeroAction';
 import SuperPower from './SuperPower';
 import HeroUpdateFrom from './HeroUpdateFrom';
 import SuperPowerForm from './SuperPowerForm';
