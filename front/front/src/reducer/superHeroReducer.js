@@ -1,15 +1,15 @@
 import ACTION_TYPES from '../action/actionTypes';
+import { updateHero } from '../saga/heroSaga';
 
 const initialState = {
   heroes: [],
   isFetching: false,
-  error: null
+  error: null,
 };
 
 function heroReducer (state = initialState, action) {
   switch (action.type) {
     case ACTION_TYPES.CREATE_HERO_REQUEST: {
-      console.log(action.data);
       return {
         ...state,
         isFetching: true
@@ -60,6 +60,28 @@ function heroReducer (state = initialState, action) {
       };
     }
 
+    case ACTION_TYPES.UPDATE_HERO_REQUEST: {
+      return {
+        ...state,
+        isFetching: true
+      };
+    }
+
+    case ACTION_TYPES.UPDATE_HERO_SUCCESS: {
+      const { heroes } = state;
+      const {
+        payload: { data: updatedHero }
+      } = action;
+      console.log(updatedHero);
+      return {
+        ...state,
+        isFetching: false,
+        heroes: heroes.map(h => {
+          return h.id === updatedHero.id ? updatedHero : h;
+        })
+      };
+    }
+
     case ACTION_TYPES.DELETE_HERO_REQUEST: {
       return {
         ...state,
@@ -70,7 +92,7 @@ function heroReducer (state = initialState, action) {
     case ACTION_TYPES.DELETE_HERO_SUCCESS: {
       const { heroes } = state;
       const {
-        payload:{id}
+        payload: { id }
       } = action;
       const newHeroesArr = heroes.filter(hero => hero.id !== id);
       console.log(heroes);
@@ -82,14 +104,53 @@ function heroReducer (state = initialState, action) {
       };
     }
 
-    case ACTION_TYPES.DELETE_HERO_ERROR:{
-      const {payload:{error}}=action;
+    case ACTION_TYPES.DELETE_HERO_ERROR: {
+      const {
+        payload: { error }
+      } = action;
       console.log(error);
-      return{
+      return {
         ...state,
         isFetching: false,
-        error:error
-      }
+        error: error
+      };
+    }
+
+    case ACTION_TYPES.DELETE_SUPER_POWER_REQUEST: {
+      return {
+        ...state,
+        isFetching: true
+      };
+    }
+
+    case ACTION_TYPES.DELETE_SUPER_POWER_SUCCESS: {
+      const { heroes } = state;
+      const {
+        payload: { id, idHero }
+      } = action;
+      const hero = heroes.find(hero => hero.id === idHero);
+      const newSuperPowerArr = hero.SuperPowers.filter(
+        power => power.id !== id
+      );
+      hero.SuperPowers = [...newSuperPowerArr];
+      return {
+        ...state,
+        isFetching: false,
+        heroes: heroes.map(h => {
+          return h.id === idHero ? hero : h;
+        })
+      };
+    }
+
+    case ACTION_TYPES.DELETE_SUPER_POWER_ERROR: {
+      const {
+        payload: { error }
+      } = action;
+      return {
+        ...state,
+        isFetching: true,
+        error: error
+      };
     }
 
     default:
