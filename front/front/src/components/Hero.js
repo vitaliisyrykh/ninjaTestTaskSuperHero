@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { deleteHeroRequest, isUpdateAction } from '../action/creatorHeroAction';
 import SuperPower from './SuperPower';
 import HeroUpdateFrom from './HeroUpdateFrom';
+import SuperPowerForm from './SuperPowerForm';
 
 const Hero = props => {
   const {
@@ -10,6 +11,7 @@ const Hero = props => {
     hero
   } = props;
   const [isUpdate, setIsUpdate]= useState(false)
+  const [isCreatePower,setIsCreate]=useState(false)
   const dispatch = useDispatch();
 
   const deleteHandler = () => {
@@ -18,6 +20,9 @@ const Hero = props => {
   const updateHandler = () => {
     setIsUpdate(prevIsUpdate=>prevIsUpdate=!isUpdate)
   };
+  const isCreatehandler = ()=>{
+    setIsCreate(prevIsCreate=>prevIsCreate = !isCreatePower);
+  }
   
   return (
     <li>
@@ -29,6 +34,7 @@ const Hero = props => {
           <h2>{realName}</h2>
           <p>{originDescription}</p>
           <span>{chartPhrase}</span>
+          {isCreatePower&& <SuperPowerForm id={id} isCreatehandler={isCreatehandler}/>}
           <ul>
             {SuperPowers.map(power => (
               <SuperPower key={power.id} power={power} idHero={id} />
@@ -39,6 +45,7 @@ const Hero = props => {
       
       <button onClick={updateHandler}>update</button>
       <button onClick={deleteHandler}>delete</button>
+      <button onClick={isCreatehandler}>Add power</button>
     </li>
   );
 };
